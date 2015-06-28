@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Life</title>
+        <meta charset='utf-8' />
+    </head>
+    <body>
+        <canvas id='life'>Обновите браузер</canvas>
+        <script>
+        var i,j,x,y;
+            var life = document.getElementById("life"),
+                ctx     = life.getContext('2d');
+            //Выделяем поле для жизни размером life.width х life.height точек    
+            life.width  = 720;
+            life.height = 720;
+            var cellSize = 8; //задаем размер клетки:
+            var cellX = life.width/cellSize; //Размер поля в клетках: по X;
+            var cellY = life.height/cellSize;//по Y.
+            
+            var cell = new Array(cellY);
+            for (y=0;y<cellY;y++) {
+        cell[y] = new Array(cellX);
+    }
+
+function grida(xMax,yMax){             //Прорисовываем сетку:
+            
+        for (y=0; y<=yMax; y+=cellSize) { //Горизонтальные линии;
+            ctx.moveTo(0, y);
+            ctx.lineTo(xMax,y);
+        }
+
+        for (x=0; x<=xMax; x+=cellSize) { //Вертикальные линии.
+            ctx.moveTo(x, 0);
+            ctx.lineTo(x,yMax);
+        }            
+        
+            ctx.stroke();
+    
+}            
+
+function initial() {  //Начальные условия
+        for (y=0;y<cellY;y++) {
+            for (x=0;x<cellX;x++) {
+                cell[x][y] = 0;
+            }
+        }
+//Расставляем живые клетки    
+    cell[10][10] =1;
+    cell[11][10] =1;
+    cell[12][10] =1;
+    
+    cell[30][10] =1;
+    cell[31][10] =1;
+    cell[32][10] =1;
+    cell[31][9] = 1;
+    cell[32][9] = 1;
+    cell[33][9] = 1;
+    
+    cell[50][10] =1;
+    cell[51][10] =1;
+    cell[50][9] = 1;
+    cell[51][9] = 1;
+    cell[52][11] =1;
+    cell[53][11] =1;
+    cell[52][12] =1;
+    cell[53][12] =1;
+    
+    cell[40][50]   =1;
+    cell[41][50]   =1;
+    cell[40][53]   =1;
+    cell[41][53]   =1;  
+    cell[43][53]   =1;
+    
+    cell[37][47]   =1;
+    cell[38][48]   =1;
+    cell[39][49]   =1;
+    cell[38][47]   =1;
+    cell[39][48]   =1;
+    cell[40][39]   =1;
+    cell[45][39]   =1;
+    cell[46][39]   =1;
+    cell[42][40]   =1;
+
+       for (x=0;x<cellX;x++) {
+        for (y=0;y<cellY;y++) {
+            if (cell[x][y] == 1)
+    ctx.fillRect(cellSize*x, cellSize*y, cellSize, cellSize);            
+        }
+       }           
+}
+
+function countLive(x,y) { //Подсчёт живых соседей:
+    var countL = 0;
+    if (x&&y&&x<(cellX-1)&&y<(cellY-1)) { //клетка всередине поля (не на краю);
+       if (cell[x-1][y-1])
+           countL++;
+       if (cell[x][y-1])
+           countL++;
+       if (cell[x+1][y-1])
+           countL++;
+       if (cell[x-1][y])
+           countL++;
+       if (cell[x+1][y])
+           countL++;
+       if (cell[x-1][y+1])
+           countL++;
+       if (cell[x][y+1])
+           countL++;
+       if (cell[x+1][y+1])
+           countL++;
+}
+else if (!x&&y&&y<(cellY-1)) { //клетка на левой границе;
+       if (cell[cellX-1][y-1])
+           countL++;
+       if (cell[x][y-1])
+           countL++;
+       if (cell[x+1][y-1])
+           countL++;
+       if (cell[cellX-1][y])
+           countL++;
+       if (cell[x+1][y])
+           countL++;
+       if (cell[cellX-1][y+1])
+           countL++;
+       if (cell[x][y+1])
+           countL++;
+       if (cell[x+1][y+1])
+           countL++;
+}
+else if (x==(cellX-1)&&y&&y<(cellY-1)) { //клетка на правой границе;
+       if (cell[x-1][y-1])
+           countL++;
+       if (cell[x][y-1])
+           countL++;
+       if (cell[0][y-1])
+           countL++;
+       if (cell[x-1][y])
+           countL++;
+       if (cell[0][y])
+           countL++;
+       if (cell[x-1][y+1])
+           countL++;
+       if (cell[x][y+1])
+           countL++;
+       if (cell[0][y+1])
+           countL++;
+}
+else if (x&&x<(cellX-1)&&!y) { //клетка в самом верху;
+       if (cell[x-1][cellY-1])
+           countL++;
+       if (cell[x][cellY-1])
+           countL++;
+       if (cell[x+1][cellY-1])
+           countL++;
+       if (cell[x-1][y])
+           countL++;
+       if (cell[x+1][y])
+           countL++;
+       if (cell[x-1][y+1])
+           countL++;
+       if (cell[x][y+1])
+           countL++;
+       if (cell[x+1][y+1])
+           countL++;
+}
+else if (x&&x<(cellX-1)&&y==(cellY-1)) { //клетка в самом низу;
+       if (cell[x-1][y-1])
+           countL++;
+       if (cell[x][y-1])
+           countL++;
+       if (cell[x+1][y-1])
+           countL++;
+       if (cell[x-1][y])
+           countL++;
+       if (cell[x+1][y])
+           countL++;
+       if (cell[x-1][0])
+           countL++;
+       if (cell[x][0])
+           countL++;
+       if (cell[x+1][0])
+           countL++;
+}
+else if (!x&&!y) { //клетка в левом верхнем углу;
+       if (cell[cellX-1][cellY-1])
+           countL++;
+       if (cell[x][cellY-1])
+           countL++;
+       if (cell[x+1][cellY-1])
+           countL++;
+       if (cell[cellX-1][y])
+           countL++;
+       if (cell[x+1][y])
+           countL++;
+       if (cell[cellX-1][y+1])
+           countL++;
+       if (cell[x][y+1])
+           countL++;
+       if (cell[x+1][y+1])
+           countL++;
+}
+else if (x==(cellX-1)&&!y) { //клетка в правом верхнем углу;
+       if (cell[x-1][cellY-1])
+           countL++;
+       if (cell[x][cellY-1])
+           countL++;
+       if (cell[0][cellY-1])
+           countL++;
+       if (cell[x-1][y])
+           countL++;
+       if (cell[0][y])
+           countL++;
+       if (cell[x-1][y+1])
+           countL++;
+       if (cell[x][y+1])
+           countL++;
+       if (cell[0][y+1])
+           countL++;
+}
+else if (x==(cellX-1)&&y==(cellY-1)) { //клетка в правом нижнем углу;
+       if (cell[x-1][y-1])
+           countL++;
+       if (cell[x][y-1])
+           countL++;
+       if (cell[0][y-1])
+           countL++;
+       if (cell[x-1][y])
+           countL++;
+       if (cell[0][y])
+           countL++;
+       if (cell[x-1][0])
+           countL++;
+       if (cell[x][0])
+           countL++;
+       if (cell[0][0])
+           countL++;
+}
+else if (!x&&y==(cellY-1)) { //клетка в левом нихнем углу;
+       if (cell[cellX-1][y-1])
+           countL++;
+       if (cell[x][y-1])
+           countL++;
+       if (cell[x+1][y-1])
+           countL++;
+       if (cell[cellX-1][y])
+           countL++;
+       if (cell[x+1][y])
+           countL++;
+       if (cell[cellX-1][0])
+           countL++;
+       if (cell[x][0])
+           countL++;
+       if (cell[x+1][0])
+           countL++;
+}
+ return countL;   //возвращаем количество живых соседей как результат функции.
+}
+
+
+function stage() { //Принимаем массив исходных состояний каждой клтки и
+     var nextLife = new Array(cellY); //создаём новый массив для следующего этапа.
+    for (y=0;y<cellY;y++) {
+        nextLife[y] = new Array(cellX);
+    }
+ctx.beginPath();
+
+    for (x=0;x<cellX;x++) {
+        for (y=0;y<cellY;y++) { 
+           if (!cell[x][y]) {       //если клетка мертва,
+               if (countLive(x,y)==3) { //а у неё ровно 3 живых соседа,
+                  nextLife[x][y]=1;     //она оживёт;
+               }
+                  else nextLife[x][y]=0;//если не 3 - останется мертвой;   
+            }
+            else {                                            //если клетка жива,
+               if ((countLive(x,y)==2)||(countLive(x,y)==3)) {//у неё 2 или 3 живых соседа,
+                    nextLife[x][y]=1;                         //она останется жива;
+                    }
+                    else {            //если живых соседа не 2 и не 3,
+                    nextLife[x][y]=0; //она умрёт от одиночества или перенаселения.
+}
+} 
+        } 
+    }
+ctx.clearRect(0, 0, life.width, life.height);//очищаем картинку,
+grida(life.width, life.height); //перерисовываем заново сетку.
+       for (x=0;x<cellX;x++) {
+        for (y=0;y<cellY;y++) {
+            if (nextLife[x][y] == 1) //рисуем новую картинку, соответствующую
+    ctx.fillRect(cellSize*x, cellSize*y, cellSize, cellSize);//новому этапу.            
+        }
+       } 
+       
+       for (x=0;x<cellX;x++) {
+        for (y=0;y<cellY;y++) {
+            cell[x][y]=nextLife[x][y];
+        }
+       }
+       
+ ctx.stroke();
+            
+}
+
+//Главная часть программы :)
+grida(life.width, life.height);
+initial();
+setInterval(stage, 300);
+
+
+        </script>
+    </body>
+</html>
