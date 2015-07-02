@@ -5,31 +5,31 @@
         <meta charset='utf-8' />
     </head>
     <body>
-        <canvas id='life'>Обновите браузер</canvas>
+        <canvas id='life'>Update the browser</canvas>
         <script>
         var i,j,x,y;
             var life = document.getElementById("life"),
                 ctx     = life.getContext('2d');
-            //Выделяем поле для жизни размером life.width х life.height точек    
+            //Select a field for life with the life.width x life.height size of points    
             life.width  = 720;
             life.height = 720;
-            var cellSize = 8; //задаем размер клетки:
-            var cellX = life.width/cellSize; //Размер поля в клетках: по X;
-            var cellY = life.height/cellSize;//по Y.
+            var cellSize = 8; //Set the cell size:
+            var cellX = life.width/cellSize; //Field size in cells: on X;
+            var cellY = life.height/cellSize;//on Y.
             
             var cell = new Array(cellY);
             for (y=0;y<cellY;y++) {
         cell[y] = new Array(cellX);
     }
 
-function grida(xMax,yMax){             //Прорисовываем сетку:
+function grida(xMax,yMax){             //Draw a grid:
             
-        for (y=0; y<=yMax; y+=cellSize) { //Горизонтальные линии;
+        for (y=0; y<=yMax; y+=cellSize) { //Horizontal lines;
             ctx.moveTo(0, y);
             ctx.lineTo(xMax,y);
         }
 
-        for (x=0; x<=xMax; x+=cellSize) { //Вертикальные линии.
+        for (x=0; x<=xMax; x+=cellSize) { //Vertical lines.
             ctx.moveTo(x, 0);
             ctx.lineTo(x,yMax);
         }            
@@ -38,13 +38,13 @@ function grida(xMax,yMax){             //Прорисовываем сетку:
     
 }            
 
-function initial() {  //Начальные условия
+function initial() {  // initial conditions
         for (y=0;y<cellY;y++) {
             for (x=0;x<cellX;x++) {
                 cell[x][y] = 0;
             }
         }
-//Расставляем живые клетки    
+//Place living cells   
     cell[10][10] =1;
     cell[11][10] =1;
     cell[12][10] =1;
@@ -89,9 +89,9 @@ function initial() {  //Начальные условия
        }           
 }
 
-function countLive(x,y) { //Подсчёт живых соседей:
+function countLive(x,y) { //Count of living neighbors:
     var countL = 0;
-    if (x&&y&&x<(cellX-1)&&y<(cellY-1)) { //клетка всередине поля (не на краю);
+    if (x&&y&&x<(cellX-1)&&y<(cellY-1)) { //the cell is in the middle weeding (not on the edge);
        if (cell[x-1][y-1])
            countL++;
        if (cell[x][y-1])
@@ -109,7 +109,7 @@ function countLive(x,y) { //Подсчёт живых соседей:
        if (cell[x+1][y+1])
            countL++;
 }
-else if (!x&&y&&y<(cellY-1)) { //клетка на левой границе;
+else if (!x&&y&&y<(cellY-1)) { //The cell is on the left border;
        if (cell[cellX-1][y-1])
            countL++;
        if (cell[x][y-1])
@@ -127,7 +127,7 @@ else if (!x&&y&&y<(cellY-1)) { //клетка на левой границе;
        if (cell[x+1][y+1])
            countL++;
 }
-else if (x==(cellX-1)&&y&&y<(cellY-1)) { //клетка на правой границе;
+else if (x==(cellX-1)&&y&&y<(cellY-1)) { //The cell is on the right border;
        if (cell[x-1][y-1])
            countL++;
        if (cell[x][y-1])
@@ -145,7 +145,7 @@ else if (x==(cellX-1)&&y&&y<(cellY-1)) { //клетка на правой гра
        if (cell[0][y+1])
            countL++;
 }
-else if (x&&x<(cellX-1)&&!y) { //клетка в самом верху;
+else if (x&&x<(cellX-1)&&!y) { //The cell is on the top;
        if (cell[x-1][cellY-1])
            countL++;
        if (cell[x][cellY-1])
@@ -163,7 +163,7 @@ else if (x&&x<(cellX-1)&&!y) { //клетка в самом верху;
        if (cell[x+1][y+1])
            countL++;
 }
-else if (x&&x<(cellX-1)&&y==(cellY-1)) { //клетка в самом низу;
+else if (x&&x<(cellX-1)&&y==(cellY-1)) { //The cell is in the bottom;
        if (cell[x-1][y-1])
            countL++;
        if (cell[x][y-1])
@@ -181,7 +181,7 @@ else if (x&&x<(cellX-1)&&y==(cellY-1)) { //клетка в самом низу;
        if (cell[x+1][0])
            countL++;
 }
-else if (!x&&!y) { //клетка в левом верхнем углу;
+else if (!x&&!y) { //The cell is in the upper left corner;
        if (cell[cellX-1][cellY-1])
            countL++;
        if (cell[x][cellY-1])
@@ -199,7 +199,7 @@ else if (!x&&!y) { //клетка в левом верхнем углу;
        if (cell[x+1][y+1])
            countL++;
 }
-else if (x==(cellX-1)&&!y) { //клетка в правом верхнем углу;
+else if (x==(cellX-1)&&!y) { //The cell is in the upper right corner;
        if (cell[x-1][cellY-1])
            countL++;
        if (cell[x][cellY-1])
@@ -217,7 +217,7 @@ else if (x==(cellX-1)&&!y) { //клетка в правом верхнем уг�
        if (cell[0][y+1])
            countL++;
 }
-else if (x==(cellX-1)&&y==(cellY-1)) { //клетка в правом нижнем углу;
+else if (x==(cellX-1)&&y==(cellY-1)) { //The cell is in the lower right corner;
        if (cell[x-1][y-1])
            countL++;
        if (cell[x][y-1])
@@ -235,7 +235,7 @@ else if (x==(cellX-1)&&y==(cellY-1)) { //клетка в правом нижне
        if (cell[0][0])
            countL++;
 }
-else if (!x&&y==(cellY-1)) { //клетка в левом нихнем углу;
+else if (!x&&y==(cellY-1)) { //The cell is in the left lower corner;
        if (cell[cellX-1][y-1])
            countL++;
        if (cell[x][y-1])
@@ -253,12 +253,12 @@ else if (!x&&y==(cellY-1)) { //клетка в левом нихнем углу;
        if (cell[x+1][0])
            countL++;
 }
- return countL;   //возвращаем количество живых соседей как результат функции.
+ return countL;   //Return number of living neighbors as result of function.
 }
 
 
-function stage() { //Принимаем массив исходных состояний каждой клтки и
-     var nextLife = new Array(cellY); //создаём новый массив для следующего этапа.
+function stage() { //Accept an array of the initial statuses of each cells 
+     var nextLife = new Array(cellY); //and create a new array for the following stage.
     for (y=0;y<cellY;y++) {
         nextLife[y] = new Array(cellX);
     }
@@ -266,28 +266,28 @@ ctx.beginPath();
 
     for (x=0;x<cellX;x++) {
         for (y=0;y<cellY;y++) { 
-           if (!cell[x][y]) {       //если клетка мертва,
-               if (countLive(x,y)==3) { //а у неё ровно 3 живых соседа,
-                  nextLife[x][y]=1;     //она оживёт;
+           if (!cell[x][y]) {       //if the cell is dead,
+               if (countLive(x,y)==3) { //and it has exactly 3 living neighbors,
+                  nextLife[x][y]=1;     //it will recover;
                }
-                  else nextLife[x][y]=0;//если не 3 - останется мертвой;   
+                  else nextLife[x][y]=0;//if not 3 - remains dead;   
             }
-            else {                                            //если клетка жива,
-               if ((countLive(x,y)==2)||(countLive(x,y)==3)) {//у неё 2 или 3 живых соседа,
-                    nextLife[x][y]=1;                         //она останется жива;
+            else {                                            //remains live,
+               if ((countLive(x,y)==2)||(countLive(x,y)==3)) {//and it has 2 or 3 living neighbors,
+                    nextLife[x][y]=1;                         //it remains is live;
                     }
-                    else {            //если живых соседа не 2 и не 3,
-                    nextLife[x][y]=0; //она умрёт от одиночества или перенаселения.
+                    else {            //if live neighbor not 2 and not 3,
+                    nextLife[x][y]=0; //she will die of loneliness or an overpopulation.
 }
 } 
         } 
     }
-ctx.clearRect(0, 0, life.width, life.height);//очищаем картинку,
-grida(life.width, life.height); //перерисовываем заново сетку.
+ctx.clearRect(0, 0, life.width, life.height);//clean a picture,
+grida(life.width, life.height); //Redraw a grid again.
        for (x=0;x<cellX;x++) {
         for (y=0;y<cellY;y++) {
-            if (nextLife[x][y] == 1) //рисуем новую картинку, соответствующую
-    ctx.fillRect(cellSize*x, cellSize*y, cellSize, cellSize);//новому этапу.            
+            if (nextLife[x][y] == 1) //Draw the new picture corresponding to a new stage
+    ctx.fillRect(cellSize*x, cellSize*y, cellSize, cellSize);
         }
        } 
        
@@ -301,7 +301,7 @@ grida(life.width, life.height); //перерисовываем заново се
             
 }
 
-//Главная часть программы :)
+//The main part of program :)
 grida(life.width, life.height);
 initial();
 setInterval(stage, 300);
