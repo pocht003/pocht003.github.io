@@ -1,4 +1,6 @@
-        function grida(xMax, yMax) { //Draw a grid:
+        var lifeLib = {}
+        
+        lifeLib.grida = function(xMax, yMax) { //Draw a grid:
             for (y = 0; y <= yMax; y += cellSize) { //Horizontal lines;
                 ctx.moveTo(0, y);
                 ctx.lineTo(xMax, y);
@@ -10,7 +12,7 @@
             ctx.stroke();
         }
 
-        function countLive(x, y) { //Count of living neighbors:
+        lifeLib.countLive = function(x, y) { //Count of living neighbors:
             var countL = 0;
             if (x && y && x < (cellX - 1) && y < (cellY - 1)) { //the cell is in the middle weeding (not on the edge);
                 if (cell[x - 1][y - 1])
