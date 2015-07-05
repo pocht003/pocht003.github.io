@@ -23,7 +23,7 @@
         for (y = 0; y < cellY; y++) {
             cell[y] = new Array(cellX);
         }
-        
+
         function initial() { // initial conditions
             for (y = 0; y < cellY; y++) {
                 for (x = 0; x < cellX; x++) {
@@ -79,11 +79,11 @@
             for (x = 0; x < cellX; x++) {
                 for (y = 0; y < cellY; y++) {
                     if (!cell[x][y]) { //if the cell is dead,
-                        if (countLive(x, y) == 3) { //and it has exactly 3 living neighbors,
+                        if (lifeLib.countLive(x, y) == 3) { //and it has exactly 3 living neighbors,
                             nextLife[x][y] = 1; //it will recover;
                         } else nextLife[x][y] = 0; //if not 3 - remains dead;   
                     } else { //remains live,
-                        if ((countLive(x, y) == 2) || (countLive(x, y) == 3)) { //and it has 2 or 3 living neighbors,
+                        if ((lifeLib.countLive(x, y) == 2) || (lifeLib.countLive(x, y) == 3)) { //and it has 2 or 3 living neighbors,
                             nextLife[x][y] = 1; //it remains is live;
                         } else { //if live neighbor not 2 and not 3,
                             nextLife[x][y] = 0; //she will die of loneliness or an overpopulation.
@@ -92,7 +92,7 @@
                 }
             }
             ctx.clearRect(0, 0, life.width, life.height); //clean a picture,
-            grida(life.width, life.height); //Redraw a grid again.
+            lifeLib.grida(life.width, life.height); //Redraw a grid again.
             for (x = 0; x < cellX; x++) {
                 for (y = 0; y < cellY; y++) {
                     if (nextLife[x][y] == 1) //Draw the new picture corresponding to a new stage
@@ -107,7 +107,7 @@
             ctx.stroke();
         }
         //The main part of program :)
-        grida(life.width, life.height);
+        lifeLib.grida(life.width, life.height);
         initial();
         setInterval(stage, 300);
     </script>
