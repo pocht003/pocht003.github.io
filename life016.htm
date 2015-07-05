@@ -23,17 +23,7 @@
         for (y = 0; y < cellY; y++) {
             cell[y] = new Array(cellX);
         }
-        function grida(xMax, yMax) { //Draw a grid:
-            for (y = 0; y <= yMax; y += cellSize) { //Horizontal lines;
-                ctx.moveTo(0, y);
-                ctx.lineTo(xMax, y);
-            }
-            for (x = 0; x <= xMax; x += cellSize) { //Vertical lines.
-                ctx.moveTo(x, 0);
-                ctx.lineTo(x, yMax);
-            }
-            ctx.stroke();
-        }
+        
         function initial() { // initial conditions
             for (y = 0; y < cellY; y++) {
                 for (x = 0; x < cellX; x++) {
