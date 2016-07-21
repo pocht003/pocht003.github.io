@@ -13,7 +13,7 @@
     <table>
   <tr>
    <td>
-           <canvas id='life'>Update the browser</canvas>
+<canvas id='life'>Update the browser</canvas>
     <script>
         var i, j, x, y;
         var life = document.getElementById("life"),
@@ -27,6 +27,17 @@
         var cell = new Array(cellY);
         for (y = 0; y < cellY; y++) {
             cell[y] = new Array(cellX);
+        }
+        function grida(xMax, yMax) { //Draw a grid:
+            for (y = 0; y <= yMax; y += cellSize) { //Horizontal lines;
+                ctx.moveTo(0, y);
+                ctx.lineTo(xMax, y);
+            }
+            for (x = 0; x <= xMax; x += cellSize) { //Vertical lines.
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, yMax);
+            }
+            ctx.stroke();
         }
         function initial() { // initial conditions
             for (y = 0; y < cellY; y++) {
@@ -73,6 +84,164 @@
                 }
             }
         }
+        function countLive(x, y) { //Count of living neighbors:
+            var countL = 0;
+            if (x && y && x < (cellX - 1) && y < (cellY - 1)) { //the cell is in the middle weeding (not on the edge);
+                if (cell[x - 1][y - 1])
+                    countL++;
+                if (cell[x][y - 1])
+                    countL++;
+                if (cell[x + 1][y - 1])
+                    countL++;
+                if (cell[x - 1][y])
+                    countL++;
+                if (cell[x + 1][y])
+                    countL++;
+                if (cell[x - 1][y + 1])
+                    countL++;
+                if (cell[x][y + 1])
+                    countL++;
+                if (cell[x + 1][y + 1])
+                    countL++;
+            } else if (!x && y && y < (cellY - 1)) { //The cell is on the left border;
+                if (cell[cellX - 1][y - 1])
+                    countL++;
+                if (cell[x][y - 1])
+                    countL++;
+                if (cell[x + 1][y - 1])
+                    countL++;
+                if (cell[cellX - 1][y])
+                    countL++;
+                if (cell[x + 1][y])
+                    countL++;
+                if (cell[cellX - 1][y + 1])
+                    countL++;
+                if (cell[x][y + 1])
+                    countL++;
+                if (cell[x + 1][y + 1])
+                    countL++;
+            } else if (x == (cellX - 1) && y && y < (cellY - 1)) { //The cell is on the right border;
+                if (cell[x - 1][y - 1])
+                    countL++;
+                if (cell[x][y - 1])
+                    countL++;
+                if (cell[0][y - 1])
+                    countL++;
+                if (cell[x - 1][y])
+                    countL++;
+                if (cell[0][y])
+                    countL++;
+                if (cell[x - 1][y + 1])
+                    countL++;
+                if (cell[x][y + 1])
+                    countL++;
+                if (cell[0][y + 1])
+                    countL++;
+            } else if (x && x < (cellX - 1) && !y) { //The cell is on the top;
+                if (cell[x - 1][cellY - 1])
+                    countL++;
+                if (cell[x][cellY - 1])
+                    countL++;
+                if (cell[x + 1][cellY - 1])
+                    countL++;
+                if (cell[x - 1][y])
+                    countL++;
+                if (cell[x + 1][y])
+                    countL++;
+                if (cell[x - 1][y + 1])
+                    countL++;
+                if (cell[x][y + 1])
+                    countL++;
+                if (cell[x + 1][y + 1])
+                    countL++;
+            } else if (x && x < (cellX - 1) && y == (cellY - 1)) { //The cell is in the bottom;
+                if (cell[x - 1][y - 1])
+                    countL++;
+                if (cell[x][y - 1])
+                    countL++;
+                if (cell[x + 1][y - 1])
+                    countL++;
+                if (cell[x - 1][y])
+                    countL++;
+                if (cell[x + 1][y])
+                    countL++;
+                if (cell[x - 1][0])
+                    countL++;
+                if (cell[x][0])
+                    countL++;
+                if (cell[x + 1][0])
+                    countL++;
+            } else if (!x && !y) { //The cell is in the upper left corner;
+                if (cell[cellX - 1][cellY - 1])
+                    countL++;
+                if (cell[x][cellY - 1])
+                    countL++;
+                if (cell[x + 1][cellY - 1])
+                    countL++;
+                if (cell[cellX - 1][y])
+                    countL++;
+                if (cell[x + 1][y])
+                    countL++;
+                if (cell[cellX - 1][y + 1])
+                    countL++;
+                if (cell[x][y + 1])
+                    countL++;
+                if (cell[x + 1][y + 1])
+                    countL++;
+            } else if (x == (cellX - 1) && !y) { //The cell is in the upper right corner;
+                if (cell[x - 1][cellY - 1])
+                    countL++;
+                if (cell[x][cellY - 1])
+                    countL++;
+                if (cell[0][cellY - 1])
+                    countL++;
+                if (cell[x - 1][y])
+                    countL++;
+                if (cell[0][y])
+                    countL++;
+                if (cell[x - 1][y + 1])
+                    countL++;
+                if (cell[x][y + 1])
+                    countL++;
+                if (cell[0][y + 1])
+                    countL++;
+            } else if (x == (cellX - 1) && y == (cellY - 1)) { //The cell is in the lower right corner;
+                if (cell[x - 1][y - 1])
+                    countL++;
+                if (cell[x][y - 1])
+                    countL++;
+                if (cell[0][y - 1])
+                    countL++;
+                if (cell[x - 1][y])
+                    countL++;
+                if (cell[0][y])
+                    countL++;
+                if (cell[x - 1][0])
+                    countL++;
+                if (cell[x][0])
+                    countL++;
+                if (cell[0][0])
+                    countL++;
+            } else if (!x && y == (cellY - 1)) { //The cell is in the left lower corner;
+                if (cell[cellX - 1][y - 1])
+                    countL++;
+                if (cell[x][y - 1])
+                    countL++;
+                if (cell[x + 1][y - 1])
+                    countL++;
+                if (cell[cellX - 1][y])
+                    countL++;
+                if (cell[x + 1][y])
+                    countL++;
+                if (cell[cellX - 1][0])
+                    countL++;
+                if (cell[x][0])
+                    countL++;
+                if (cell[x + 1][0])
+                    countL++;
+            }
+            return countL; //Return number of living neighbors as result of function.
+        }
         function stage() { //Accept an array of the initial statuses of each cells 
             var nextLife = new Array(cellY); //and create a new array for the following stage.
             for (y = 0; y < cellY; y++) {
@@ -82,11 +251,11 @@
             for (x = 0; x < cellX; x++) {
                 for (y = 0; y < cellY; y++) {
                     if (!cell[x][y]) { //if the cell is dead,
-                        if (lifeLib.countLive(x, y) == 3) { //and it has exactly 3 living neighbors,
+                        if (countLive(x, y) == 3) { //and it has exactly 3 living neighbors,
                             nextLife[x][y] = 1; //it will recover;
                         } else nextLife[x][y] = 0; //if not 3 - remains dead;   
                     } else { //remains live,
-                        if ((lifeLib.countLive(x, y) == 2) || (lifeLib.countLive(x, y) == 3)) { //and it has 2 or 3 living neighbors,
+                        if ((countLive(x, y) == 2) || (countLive(x, y) == 3)) { //and it has 2 or 3 living neighbors,
                             nextLife[x][y] = 1; //it remains is live;
                         } else { //if live neighbor not 2 and not 3,
                             nextLife[x][y] = 0; //she will die of loneliness or an overpopulation.
@@ -95,7 +264,7 @@
                 }
             }
             ctx.clearRect(0, 0, life.width, life.height); //clean a picture,
-            lifeLib.grida(life.width, life.height); //Redraw a grid again.
+            grida(life.width, life.height); //Redraw a grid again.
             for (x = 0; x < cellX; x++) {
                 for (y = 0; y < cellY; y++) {
                     if (nextLife[x][y] == 1) //Draw the new picture corresponding to a new stage
@@ -110,7 +279,7 @@
             ctx.stroke();
         }
         //The main part of program :)
-        lifeLib.grida(life.width, life.height);
+        grida(life.width, life.height);
         initial();
         setInterval(stage, 300);
     </script>
